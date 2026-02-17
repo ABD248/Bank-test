@@ -1,0 +1,25 @@
+services:
+  app:
+    image: 'springboot-docker:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/bookstores
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=Omri
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - '8181:8080'
+
+  db:
+    image: postgres:13
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Omri
+      - POSTGRES_DB=bookstores
+    ports:
+      - '5432:5432'
